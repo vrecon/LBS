@@ -2,13 +2,14 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'global/Helper',    
+    'global/Helper',
+     'global/BaseView',  
     'text!templates/toplevel.html',
     'text!templates/xml/worklocations.xml',    
 "plugins/jquery.xml2json"
-], function($, _, Backbone,Helper,template,xmlWorkLocations) {
+], function($, _, Backbone,Helper,BaseView,template,xmlWorkLocations) {
     
-    var TopLevelView = Backbone.View.extend({
+    var TopLevelView = BaseView.extend({
         
         template: _.template(template),
         identifier: 'toplevel',
@@ -32,6 +33,7 @@ define([
             this.render();    
         },
         render: function () {
+             this.statusBar();
             var topLevels = this.getTopLevels();
             this.setElement($('#toplevel-content'));
             this.$el.html(this.template({"topLevels":topLevels}));

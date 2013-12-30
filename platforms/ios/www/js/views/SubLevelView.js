@@ -2,11 +2,12 @@
     'jquery',
     'underscore',
     'backbone',
-    'global/Helper',       
+    'global/Helper',      
+    'global/BaseView',    
     'text!templates/sublevel.html',
-    ], function($, _, Backbone,Helper,template) {
+    ], function($, _, Backbone,Helper,BaseView,template) {
     
-    var SubLevelView = Backbone.View.extend({
+    var SubLevelView = BaseView.extend({
     
         template: _.template(template),
         identifier: 'sublevel',
@@ -37,6 +38,7 @@
             this.render();    
         },
         render: function () {
+                         this.statusBar();
             var subLevels = this.getSubLevel(this.id);
             if(this.id){
                 $("#sublevel-content").removeClass();

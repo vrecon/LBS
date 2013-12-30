@@ -92,7 +92,7 @@ html body .pages.open .page-shader {
 
 /* line 63, ../../../app/styles/_global.scss */
 .page {
-    position: fixed;
+    position: absolute;
     top: 0;
     margin: 0;
     left: 0;
@@ -397,7 +397,7 @@ body {
 @media only screen and (max-device-width: 767px){
     /*Start login page*/
     html body .pages {
-        background-image:url('../imgs/bg.png')!important;
+        background-image:url('../imgs/iphone/blanko.png')!important; 
     }    
 /* line 136, ../../../app/styles/_global.scss */
 .page  h1 {
@@ -636,18 +636,10 @@ body {
     height: 100%;
     position: absolute;
     background-image:url('../imgs/iphone/blanko.png')!important;;
-    background-size:50%;
+    background-size:100%;
     background-repeat:no-repeat;
     background-position:center;    
 }
-
-
-
-
-
-
-
-
 
 
 .back{
@@ -1031,7 +1023,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    top: 25px;
+    top: 5px;
     width: 140px;
     height: 30px;
     margin-bottom: 25px;
@@ -1046,7 +1038,7 @@ body {
     height: 25px;
     margin-left: 11px;
     float: left;
-    margin-top: 30px;
+    margin-top: 10px;
     position: relative;
 }    
 

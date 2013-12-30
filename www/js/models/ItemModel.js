@@ -19,8 +19,9 @@
             MiddleName:" ",
             Community:"Den Haag",
             ExtraCommunity:" ",
-            LinkedInID:" ",
-            TwitterID:" "    
+            LinkedInID:"",
+            TwitterID:"",
+            FacebookID:""      
             },    
             
             },

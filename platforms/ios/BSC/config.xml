@@ -32,6 +32,9 @@
     <description>
         Hello World sample application that responds to the deviceready event.
     </description>
+    <feature name="Sms">
+        <param name="ios-package" value="Sms" />
+    </feature>
     <name>BSC</name>
     <description>
         Hello World sample application that responds to the deviceready event.
@@ -81,7 +84,4 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Sms">
-        <param name="ios-package" value="Sms" />
-    </feature>
 </widget>

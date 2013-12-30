@@ -40,7 +40,7 @@ define([
         },
 
         render: function () {
-
+ this.statusBar();
             this.setElement($('#news-content'));
             this.renderedView = this.template({"newsCollection":window.newsCollection});
             this.$el.html(this.renderedView);

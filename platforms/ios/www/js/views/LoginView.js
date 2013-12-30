@@ -77,10 +77,7 @@ define([
         },
         initialize: function () {
             this.setUserSettings();    
-            Helper.setPageContent('#login-content', this.$el);    
-            if( $('body').has("ios") && parseInt(localStorage.getItem("deviceVersion")) >= 7.0){ 
-                $(".pages").css("margin-top", "20px");
-            }    
+            Helper.setPageContent('#login-content', this.$el);   
             this.render();        
         },
         focus: function(e){
@@ -101,6 +98,7 @@ define([
             this.login();
         },
         render: function () {
+             this.statusBar();
             this.model = new LoginModel();
             this.setElement($('#login-content'));
             var token = window.localStorage.getItem("token");

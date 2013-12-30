@@ -2,11 +2,12 @@
     'jquery',
     'underscore',
     'backbone',
-    'global/Helper',       
+    'global/Helper',      
+    'global/BaseView',    
     'text!templates/sublevel.html',
-    ], function($, _, Backbone,Helper,template) {
+    ], function($, _, Backbone,Helper,BaseView,template) {
     
-    var SubLevelView = Backbone.View.extend({
+    var SubLevelView = BaseView.extend({
     
         template: _.template(template),
         identifier: 'sublevel',
@@ -24,9 +25,12 @@
               Helper.go("#maps");
     
         },
-        home : function(){
+        home : function(e){
+            e.preventDefault();
+            e.stopPropagation();
+             $("#sublevel-content").removeClass();
             Helper.go("#toplevel");
-        }   , 
+        }, 
         
         initialize: function () {
             this.settings = JSON.parse(window.localStorage.getItem("settings"));    
@@ -34,8 +38,13 @@
             this.render();    
         },
         render: function () {
+                         this.statusBar();
             var subLevels = this.getSubLevel(this.id);
-            this.setElement($('#sublevel-content'));
+            if(this.id){
+                $("#sublevel-content").removeClass();
+                $('#sublevel-content').addClass(this.id.toLowerCase());
+            }
+                this.setElement($('#sublevel-content'));
             if(subLevels){
                 this.$el.html(this.template({"id":this.id.toLowerCase(),"subLevels":subLevels}));
             }

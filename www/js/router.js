@@ -10,8 +10,9 @@ define([
     'views/SubLevelView',
     'views/MapsView',
     'views/PersonView',
-    'views/NewsView'
-], function($, _, Backbone,Helper,BaseRouter,LoginView,TopLevelView,SubLevelView,MapsView,PersonView,NewsView) {
+    'views/NewsView',
+    'views/NewsItemView'
+], function($, _, Backbone,Helper,BaseRouter,LoginView,TopLevelView,SubLevelView,MapsView,PersonView,NewsView,NewsItemView) {
     
     var AppRouter = BaseRouter.extend({
         
@@ -23,9 +24,20 @@ define([
             "sublevel/:id":"subMetro",
             "maps": "maps",
             "person/:id":"person",
-            "news":"news"
+            "news":"news",
+            "newsitem/:id":"newsitem"
         },
         
+        
+        newsitem : function(id){
+            var self = this;
+             if(this.checkForToken()){
+            Helper.showPage('#newsitem', function(){
+                    var view = self.viewManager.addView('newsitem' ,new NewsItemView({"id":id}));  
+                
+            });     
+             } 
+        },    
         
         news:function(){
          var self = this;
@@ -45,6 +57,9 @@ define([
         login : function(){
          var self = this;
              var token = window.localStorage.getItem("token");
+            if(token){
+                this.metro();
+            }else{    
             Helper.showPage('#login', function(){
                 if( self.viewManager.getView('login')){
                     var view =  self.viewManager.getView('login');
@@ -52,7 +67,8 @@ define([
                     var view = self.viewManager.addView('login' ,new LoginView());  
                 }
                 
-            });     
+            }); 
+            }    
         },
         metro : function(){
             var self = this;
@@ -72,7 +88,6 @@ define([
             var self = this;
             if(this.checkForToken()){
                 Helper.showPage('#sublevel', function(){
-                   // var mapsView = self.viewManager.deleteView('maps');
                     var view = self.viewManager.addView('sublevel' ,new SubLevelView({"id":id}));  
                 }); 
             }    

@@ -145,7 +145,7 @@ define([
 				 'views/TopLevelView',
                  'views/SubLevelView',
                  'views/LoginView',
-                 'views/PersonView',
+        
 
 
 				], function(){
@@ -158,7 +158,6 @@ define([
                         'views/TopLevelView',
                          'views/SubLevelView',
 						'views/LoginView',
-                         'views/PersonView',
 						]);
 
 					BSC.initialize();

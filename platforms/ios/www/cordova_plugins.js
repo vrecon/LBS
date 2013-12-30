@@ -49,6 +49,13 @@ module.exports = [
         "clobbers": [
             "window.open"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.plugin.sms/www/sms.js",
+        "id": "org.apache.cordova.plugin.sms.Sms",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -56,7 +63,8 @@ module.exports.metadata =
 {
     "org.apache.cordova.geolocation": "0.3.4",
     "org.apache.cordova.network-information": "0.2.4",
-    "org.apache.cordova.inappbrowser": "0.2.4"
+    "org.apache.cordova.inappbrowser": "0.2.4",
+    "org.apache.cordova.plugin.sms": "0.1.0"
 }
 // BOTTOM OF METADATA
 });

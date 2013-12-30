@@ -1,3 +1,15 @@
-<div id="mydiv">
-
-</div>
+<div ><div class="nobg"><div class="nieuwsback"></div></div><div class="nobg"><div class="smallbox nieuwslist" >&nbsp;</div></div></div>
+<div id="newsitems">
+    
+<% _.each(newsCollection.models, function(model) { %> 
+    <div class="newsitem">
+        <div class="grid topnews">
+            <div class="col-3-4 title"> <%= model.get("titel") %></div>   
+            <div class="col-1-4 date"> <%= model.get("datum") %></div>  
+        </div>
+        <div class="introductie">        
+            <%= model.get("introductie") %><span class="meer" id="<%= model.get('id') %>">&nbsp;LEES MEER</span> 
+        </div>        
+    </div>        
+<% }); %>           
+</div>    

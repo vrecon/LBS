@@ -4,14 +4,15 @@ define([
     'backbone',
     'gmap',
     'global/Helper',
+     'global/BaseView',  
     'collections/Collection',
     'views/PersonView',
     'text!templates/maps.html',
     'text!templates/xml/worklocations.xml', 
     'text!templates/ipadperson.html', 
-], function($, _, Backbone, googleMap,Helper,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
+], function($, _, Backbone, googleMap,Helper,BaseView,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
     
-    var MapsView = Backbone.View.extend({
+    var MapsView = BaseView.extend({
         template:_.template(mapTemplate),
         identifier: 'maps',
         model:null,
@@ -34,13 +35,14 @@ define([
             e.stopPropagation();
              var height = window.innerHeight 
              $('#map-canvas').height(height);
+             $("#popUpPerson").hide();
             $('#under_map').hide();
         },
         
         locatie : function(e){
             e.preventDefault();
             e.stopPropagation();
-            this.updateMap();
+            this.map.setCenter(this.latlng);
         },
         
         menu : function(e){
@@ -77,12 +79,12 @@ define([
         },   
         
         initialize: function(){
-            Helper.setPageContent('#maps-content', this.$el); 
-            
+            Helper.setPageContent('#maps-content', this.$el);  
             this.render();
         },
         
         render: function(){
+             this.statusBar();
             this.setElement($('#maps-content'));    
             this.renderedView = this.template();
             this.$el.html(this.renderedView);
@@ -129,18 +131,18 @@ define([
                 
                 function success(lat, lng){
                     
-                    var latlng = new google.maps.LatLng(lat, lng); 
+                   self.latlng = new google.maps.LatLng(lat, lng); 
                     var mapOptions = {
-                        zoom: 10,
-                        center: latlng,
+                        zoom: 12,
+                        center: self.latlng,
                         disableDefaultUI: true,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    var map = new google.maps.Map(document.getElementById("map-canvas"),
+                    self.map = new google.maps.Map(document.getElementById("map-canvas"),
                                                   mapOptions);   
                     // Create marker 
                     self.collection = new mapCollection();
-                    self.getMarkers(lat,lng, map);
+                    self.getMarkers(lat,lng);
                     
                     
                 } 
@@ -159,7 +161,7 @@ define([
             
         },
         
-        getMarkers :function(lat,lng,map){
+        getMarkers :function(lat,lng){
             var self = this;
             var currentSector = window.localStorage.getItem("currentSector");
             
@@ -175,7 +177,7 @@ define([
             };
             var soapRequest = createXML(); 
             var wsUrl = "http://bsc-api.viperonline.nl/secureservices/export.asmx?op=GetWorkLocations";
-            $.ajax({
+            $.ajax({ 
                 type: "POST",
                 url: wsUrl,
                 contentType: "text/xml",
@@ -193,10 +195,10 @@ define([
                     window.localStorage.setItem("worklocations",JSON.stringify(workLocation));    
                     self.collection.reset(workLocation);
                     //   self.collection.bind("reset", function(){self.render();}, self);
-                    self.drawMarkers(map,self);
-                    google.maps.event.trigger(map, "resize");
-                    map.setZoom( map.getZoom() );
-                    map.setCenter(new google.maps.LatLng(lat,lng));
+                    self.drawMarkers(self);
+                    google.maps.event.trigger(self.map, "resize");
+                    self.map.setZoom( self.map.getZoom() );
+                    self.map.setCenter(new google.maps.LatLng(lat,lng));
                 }
                 
             }
@@ -206,16 +208,16 @@ define([
             }     
         },
         
-        drawMarkers: function(map,self){
+        drawMarkers: function(self){
             _.each(self.collection.models,function(coords){
                 var loc = new google.maps.LatLng(coords.get("GeoLatitude"), coords.get("GeoLongitude"));
                 var marker = new google.maps.Marker({
                     position: loc,
-                    map: map,
+                    map: self.map,
                     title:coords.get("ID")
                 });
                 google.maps.event.addListener(marker, 'click', function() {
-                    map.setZoom(12);
+                    self.map.setZoom(14);
                     self.model=coords;
                     if(window.localStorage.getItem("device") === "iPad"){
                         self.showPerson();
@@ -227,7 +229,7 @@ define([
                     $("#bscorganisation").html(coords.get("Name"));
                     }   
                     
-                    map.setCenter(marker.getPosition());
+                    self.map.setCenter(marker.getPosition());
                 });     
                 
             });

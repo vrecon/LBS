@@ -1,37 +1,38 @@
-<div class="<%= id %>"></div>
+
 <div class="wrap">
     <div class="box lt">
     <div class="boxInner" id="<%= subLevels[0].id %>">
-        <div class="titleBox"><%= subLevels[0].name %></div>
+        <div class="titleBox" id="<%= subLevels[0].id %>"><%= subLevels[0].name %></div>
       </div>
     </div>
     <div class="box rt" >
     <div class="boxInner" id="<%= subLevels[1].id %>">
-        <div class="titleBox"><%= subLevels[1].name %></div>
+        <div class="titleBox" id="<%= subLevels[1].id %>"><%= subLevels[1].name %></div>
       </div>
     </div>
     <div class="box lb">    
         <div class="boxInner"  id="<%= subLevels[2].id %>">
-        <div class="titleBox"><%= subLevels[2].name %></div>
+        <div class="titleBox" id="<%= subLevels[2].id %>"><%= subLevels[2].name %></div>
       </div>
     </div>
     <div class="box rb" >
         <div class="boxInner" id="<%= subLevels[3].id %>">
-        <div class="titleBox"><%= subLevels[3].name %></div>
+        <div class="titleBox" id="<%= subLevels[3].id %>"><%= subLevels[3].name %></div>
       </div>
     </div>
-    
-  <% if (subLevels.length > 4 ) { %>    
-    <div class="box rbb" >
-        <div class="boxInner" id="<%= subLevels[4].id %>">
-        <div class="titleBox"><%= subLevels[4].name %></div>
-      </div>
-    </div>   
-    <% } %>
-           <div class="smallbox back" >
+    <div class="smallbox back" >
         <div class="smallboxInner" id="back">
         <div class="smalltitleBox"></div>
       </div>
+
     </div> 
+        <% if (subLevels.length > 4 ) { %>    
+    <div class="box rbb" >
+        <div class="boxInner" id="<%= subLevels[4].id %>">
+        <div class="titleBox" id="<%= subLevels[4].id %>"><%= subLevels[4].name %></div>
+      </div>
+    </div>   
+    <% } %>
+
     </div>
       

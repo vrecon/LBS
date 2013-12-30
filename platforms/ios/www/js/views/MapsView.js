@@ -4,14 +4,15 @@ define([
     'backbone',
     'gmap',
     'global/Helper',
+     'global/BaseView',  
     'collections/Collection',
     'views/PersonView',
     'text!templates/maps.html',
     'text!templates/xml/worklocations.xml', 
     'text!templates/ipadperson.html', 
-], function($, _, Backbone, googleMap,Helper,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
+], function($, _, Backbone, googleMap,Helper,BaseView,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
     
-    var MapsView = Backbone.View.extend({
+    var MapsView = BaseView.extend({
         template:_.template(mapTemplate),
         identifier: 'maps',
         model:null,
@@ -78,14 +79,12 @@ define([
         },   
         
         initialize: function(){
-            Helper.setPageContent('#maps-content', this.$el); 
-              if( $('body').has("ios") && parseInt(localStorage.getItem("deviceVersion")) >= 7.0){ 
-                $(".pages").css("margin-top", "20px");
-            }  
+            Helper.setPageContent('#maps-content', this.$el);  
             this.render();
         },
         
         render: function(){
+             this.statusBar();
             this.setElement($('#maps-content'));    
             this.renderedView = this.template();
             this.$el.html(this.renderedView);

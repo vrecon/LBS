@@ -3,11 +3,12 @@ define([
     'underscore',
     'backbone',
     'global/Helper',
+    'global/BaseView',
     'models/ItemModel',    
     'text!templates/person.html',
-], function($, _, Backbone,Helper,ItemModel,template) {
+], function($, _, Backbone,Helper,BaseView,ItemModel,template) {
     
-    var PersonView = Backbone.View.extend({
+    var PersonView = BaseView.extend({
         
         template: _.template(template),
         identifier: 'person',
@@ -26,22 +27,27 @@ define([
         call : function(e){
             e.preventDefault();
             e.stopPropagation();
-            document.location.href = 'tel:'+this.model.get('MobileNr');
+            document.location.href = 'tel:'+this.model.get("Coach").MobileNr;
         },
         
         mail : function(e){
             e.preventDefault();
             e.stopPropagation();      
-            document.location.href = 'mailto:'+this.model.get('Email');
+            document.location.href = 'mailto:'+this.model.get("Coach").Email;
         },
  
         sms : function(e){
             e.preventDefault();
             e.stopPropagation();      
-            document.location.href = 'mailto:'+this.model.get('Email');
+             var number = this.model.get("Coach").MobileNr;
+            var message = "";
+            var intent = "INTENT"; //leave empty for sending sms using default intent
+            var success = function () { console('Message sent successfully'); };
+            var error = function (e) { console('Message Failed:' + e); };
+            sms.send(number, message, intent, success, error);
         },
         
-        back : function(){
+        back : function(e){
             e.preventDefault();
             e.stopPropagation();  
             Helper.go("#maps");
@@ -88,10 +94,11 @@ define([
         },
         
         initialize: function () { 
-            Helper.setPageContent('#person-content', this.$el); 
+            Helper.setPageContent('#person-content', this.$el);
             this.render();    
         },
         render: function () {
+             this.statusBar();
             var self = this;
             var worklocations = window.localStorage.getItem("worklocations");
             if(worklocations){
@@ -108,7 +115,12 @@ define([
             this.$el.html(this.template({"model":this.model}));
             var height = window.innerHeight ;
             var width = window.innerWidth;
-            $('.person').height(height*0.88);
+            var ios7height;  
+            if( $('body').has("ios") && parseInt(localStorage.getItem("deviceVersion")) >= 7.0){ 
+                ios7height = -20;
+              }
+            
+            $('.person').height(height*0.88+ios7height);
             $('.person').width(width);
             return this;    
         },
