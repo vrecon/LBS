@@ -56,6 +56,27 @@ module.exports = [
         "clobbers": [
             "window.sms"
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.console/www/console-via-logger.js",
+        "id": "org.apache.cordova.console.console",
+        "clobbers": [
+            "console"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.console/www/logger.js",
+        "id": "org.apache.cordova.console.logger",
+        "clobbers": [
+            "cordova.logger"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -64,7 +85,9 @@ module.exports.metadata =
     "org.apache.cordova.geolocation": "0.3.4",
     "org.apache.cordova.network-information": "0.2.4",
     "org.apache.cordova.inappbrowser": "0.2.4",
-    "org.apache.cordova.plugin.sms": "0.1.0"
+    "org.apache.cordova.plugin.sms": "0.1.0",
+    "com.phonegap.plugins.PushPlugin": "2.1.1",
+    "org.apache.cordova.console": "0.2.5"
 }
 // BOTTOM OF METADATA
 });

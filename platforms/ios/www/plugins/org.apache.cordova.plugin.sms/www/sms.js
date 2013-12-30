@@ -1,6 +1,4 @@
-cordova.define("org.apache.cordova.plugin.sms.Sms", function(require, exports, module) {
-               
-var sms = {
+cordova.define("org.apache.cordova.plugin.sms.Sms", function(require, exports, module) {var sms = {
     send: function(phone, message, method, successCallback, failureCallback) {
     	// iOS plugin used to accept comma-separated phone numbers, keep the
     	// compatibility
@@ -20,5 +18,4 @@ var sms = {
     }
 };
 
-module.exports = sms;
-});
+module.exports = sms;});

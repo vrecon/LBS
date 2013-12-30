@@ -8,6 +8,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.plugin.gcm.PushHandlerActivity" />
+        <receiver android:name="com.plugin.gcm.CordovaGCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="nl.vrecon.BSC" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.plugin.gcm.GCMIntentService" />
     </application>
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -20,4 +29,10 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="nl.vrecon.BSC.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="nl.vrecon.BSC.permission.C2D_MESSAGE" />
 </manifest>

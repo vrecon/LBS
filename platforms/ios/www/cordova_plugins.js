@@ -56,6 +56,13 @@ module.exports = [
         "clobbers": [
             "window.sms"
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -64,7 +71,8 @@ module.exports.metadata =
     "org.apache.cordova.geolocation": "0.3.4",
     "org.apache.cordova.network-information": "0.2.4",
     "org.apache.cordova.inappbrowser": "0.2.4",
-    "org.apache.cordova.plugin.sms": "0.1.0"
+    "org.apache.cordova.plugin.sms": "0.1.0",
+    "com.phonegap.plugins.PushPlugin": "2.1.1"
 }
 // BOTTOM OF METADATA
 });
