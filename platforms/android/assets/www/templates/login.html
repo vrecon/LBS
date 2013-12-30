@@ -1,0 +1,10 @@
+<div class="login">
+    <h1>LOGIN</h1>
+    <form action="">
+        <div><input type="text" id="username" placeholder="Naam" class="name" required/></div>
+        <div><input type="password" id="password" placeholder="Wachtwoord" class="password" required/></div>
+        <div class="error  <%if(token != "Invalid Username or Password"){%> hide <% } %>" ><%= token %></div>
+    </form>    
+</div>
+<div class="logo"></div>    
+    

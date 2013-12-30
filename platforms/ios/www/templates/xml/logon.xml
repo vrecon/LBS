@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Header>
+    <SecuredWebServiceHeader xmlns="http://vipersoftware.nl/">
+      <Username><%= username %></Username>
+      <Password><%= password %></Password>
+      <AuthenticatedToken>string</AuthenticatedToken>
+    </SecuredWebServiceHeader>
+  </soap:Header>
+  <soap:Body>
+    <AuthenticateUserExtended xmlns="http://vipersoftware.nl/" />
+  </soap:Body>
+</soap:Envelope>
+      
+      

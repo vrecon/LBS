@@ -1,0 +1,6 @@
+[ 
+  {"id":"1","name":"Barry Vredevoort", "organisation": "Vrecon Solutions","lat": 52.3898094, "lng": 4.9042701},
+  {"id":"2","name":"Guido Vervelde","organisation": "Linden Mobile", "lat": 52.3921651, "lng": 4.9163254 },
+  {"id":"3","name":"Nicky Falkenberg","organisation": "Linden Mobile","lat": 52.400851, "lng": 4.922371},
+  {"id":"4","name":"Gerbert Jan Valk","organisation": "Linden Mobile", "lat": 52.3715941, "lng":4.8873342 }
+]

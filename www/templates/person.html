@@ -1,0 +1,37 @@
+<div class="person">
+    <div id="header"><div id="icon_back">&nbsp;</div></div>
+    <div id="top_person" class="grid">
+        <div class="col-1-2">
+            <div id="foto">
+                <div id="icon_foto">&nbsp;</div>
+            </div>
+        </div>
+        <div class="col-1-2">
+            <div id="social">
+                <div id="icon_twitter" class="twitter">&nbsp;</div>
+                <div id="icon_linkedin" class="linkedin">&nbsp;</div> 
+            </div>
+        </div>
+    </div>
+    <div id="locationdata" class="grid">
+        <div class="col-1-2">
+            <div class="oname"><%= (model.get("Coach").Clamourname+" "+model.get("Coach").MiddleName).trim() +" "+model.get("Coach").Surname %></div>
+            <div class="bname"><%= model.get("Coach").Email %></div>  
+            <div class="bname"><%= model.get("Coach").MobileNr %></div>
+            <div class="bname"><%= model.get("Coach").Community %></div>  
+        </div>     
+        <div class="col-1-2">
+            <div class="oname"><%= model.get("Name") %></div>
+            <div class="bname"><%= model.get("Address") %></div>
+            <div class="bname"><%= model.get("ZipCode") %></div>  
+            <div class="bname"><%= model.get("Residence") %></div>  
+        </div>
+    </div>
+    <div id="activity"><%= model.get("Description") %></div>
+    <div id="contact" class="grid">
+    <div class="colcontact"><div id="icon_phone" class="phone">&nbsp;</div></div>
+    <div class="colcontact"><div id="icon_mail" class="mail">&nbsp;</div></div>
+    <div class="colcontact"><div id="icon_sms" class="sms">&nbsp;</div></div>    
+    </div>
+</div>
+
