@@ -35,8 +35,17 @@
     <feature name="PushPlugin">
         <param name="ios-package" value="PushPlugin" />
     </feature>
+    <feature name="Console">
+        <param name="ios-package" value="CDVLogger" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
     <feature name="Sms">
         <param name="ios-package" value="Sms" />
+    </feature>
+    <feature name="Vibration">
+        <param name="ios-package" value="CDVVibration" />
     </feature>
     <name>BSC</name>
     <description>
@@ -87,7 +96,4 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Console">
-        <param name="ios-package" value="CDVLogger" />
-    </feature>
 </widget>

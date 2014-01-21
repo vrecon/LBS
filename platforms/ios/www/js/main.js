@@ -11,6 +11,7 @@ require.config({
     underscore: 'libs/underscore/underscore-min',
     backbone: 'libs/backbone/backbone-min',
     gmap:'libs/maps/gmap',
+     oms:'libs/maps/oms',  
     async: 'libs/async/async',
     text:'libs/text/text',  
     templates: '../templates'
@@ -29,6 +30,9 @@ shim: {
             exports: 'Backbone'
         },  
     
+        'oms':{
+        exports:'oms'
+        },
        "plugins/jquery.xml2json": ['$'],
     }    
 });

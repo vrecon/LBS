@@ -4,7 +4,7 @@ define([
     'backbone',
     'gmap',
     'global/Helper',
-     'global/BaseView',  
+    'global/BaseView',  
     'collections/Collection',
     'views/PersonView',
     'text!templates/maps.html',
@@ -33,9 +33,9 @@ define([
         hideUnder: function(e){
             e.preventDefault();
             e.stopPropagation();
-             var height = window.innerHeight 
-             $('#map-canvas').height(height);
-             $("#popUpPerson").hide();
+            var height = window.innerHeight 
+            $('#map-canvas').height(height);
+            $("#popUpPerson").hide();
             $('#under_map').hide();
         },
         
@@ -54,7 +54,9 @@ define([
         person : function(e){
             e.preventDefault();
             e.stopPropagation();
-            Helper.go("#person/"+this.model.get("ID"));
+            if(this.model){
+                Helper.go("#person/"+this.model.get("ID"));
+            }
         },
         
         popupSectors : function(e){
@@ -84,7 +86,7 @@ define([
         },
         
         render: function(){
-             this.statusBar();
+            this.statusBar();
             this.setElement($('#maps-content'));    
             this.renderedView = this.template();
             this.$el.html(this.renderedView);
@@ -131,7 +133,7 @@ define([
                 
                 function success(lat, lng){
                     
-                   self.latlng = new google.maps.LatLng(lat, lng); 
+                    self.latlng = new google.maps.LatLng(lat, lng); 
                     var mapOptions = {
                         zoom: 12,
                         center: self.latlng,
@@ -139,7 +141,7 @@ define([
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
                     self.map = new google.maps.Map(document.getElementById("map-canvas"),
-                                                  mapOptions);   
+                                                   mapOptions);   
                     // Create marker 
                     self.collection = new mapCollection();
                     self.getMarkers(lat,lng);
@@ -191,6 +193,14 @@ define([
                 
                 if (status == "success"){
                     json = $.xml2json(response);
+                    var errorCode = json.Body.GetWorkLocationsResponse.GetWorkLocationsResult.ErrorCode
+                    if(errorCode != "0"){
+                        window.localStorage.removeItem("token");
+                        Helper.go("#login");
+                        return;
+                    }    
+                    
+                    
                     var workLocation =json.Body.GetWorkLocationsResponse.GetWorkLocationsResult.Locations.WorkLocation;
                     window.localStorage.setItem("worklocations",JSON.stringify(workLocation));    
                     self.collection.reset(workLocation);
@@ -209,8 +219,17 @@ define([
         },
         
         drawMarkers: function(self){
-            _.each(self.collection.models,function(coords){
-                var loc = new google.maps.LatLng(coords.get("GeoLatitude"), coords.get("GeoLongitude"));
+            var indexes = self.findDuplicates(self.collection);
+            _.each(self.collection.models,function(coords,i){
+                var adjusted_lat,adjusted_lon;
+                if(indexes.indexOf(i) != -1){
+                adjusted_lat = parseFloat(coords.get("GeoLatitude")) + (Math.random() -.5) / 750;
+                adjusted_lon = parseFloat(coords.get("GeoLongitude")) + (Math.random() -.5) / 750;   
+               }else{
+                    adjusted_lat = coords.get("GeoLatitude");
+                   adjusted_lon = coords.get("GeoLongitude");
+                }    
+                var loc = new google.maps.LatLng(adjusted_lat, adjusted_lon);
                 var marker = new google.maps.Marker({
                     position: loc,
                     map: self.map,
@@ -222,11 +241,11 @@ define([
                     if(window.localStorage.getItem("device") === "iPad"){
                         self.showPerson();
                     }else{
-                    var height = window.innerHeight ;
-                    $('#map-canvas').height(height*0.75);
-                    $('#under_map').show();
-                    $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
-                    $("#bscorganisation").html(coords.get("Name"));
+                        var height = window.innerHeight ;
+                        $('#map-canvas').height(height*0.75);
+                        $('#under_map').show();
+                        $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
+                        $("#bscorganisation").html(coords.get("Name"));
                     }   
                     
                     self.map.setCenter(marker.getPosition());
@@ -238,11 +257,36 @@ define([
         showPerson : function(){
             var view = new PersonView();
             view.template =  _.template(ipadperson),
-            view.setElement("#popUpPerson");
+                view.setElement("#popUpPerson");
             view.id = this.model.get("ID");
             view.render(); 
             $("#popUpPerson").show();
-        }    
+        },
+        
+        findDuplicates : function(collection){
+            
+            var modelArray = [];
+            _.each(collection.models,function(model) {
+                      var a = model.get("GeoLongitude");
+             modelArray.push(a);    
+            });
+            
+            var lowest = Math.min.apply(Math, modelArray);     //Find the lowest number
+            var count = 0;                                //Set a count variable
+            var indexes = [];              //New array to store indexes of lowest number
+            
+            for(var i=0; i<modelArray.length;i++) //Loop over your array
+            {
+                if(modelArray[i] == lowest) //If the value is equal to the lowest number
+                {
+                    indexes.push(i); //Push the index to your index array
+                    count++;         //Increment your counter
+                }
+            }
+            
+            
+            return indexes;
+        },    
         
     });
     return MapsView;

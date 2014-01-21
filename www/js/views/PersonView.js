@@ -42,8 +42,8 @@ define([
              var number = this.model.get("Coach").MobileNr;
             var message = "";
             var intent = "INTENT"; //leave empty for sending sms using default intent
-            var success = function () { console('Message sent successfully'); };
-            var error = function (e) { console('Message Failed:' + e); };
+            var success = function () { console.log('Message sent successfully'); };
+            var error = function (e) { console.log('Message Failed:' + e); };
             sms.send(number, message, intent, success, error);
         },
         
@@ -115,13 +115,17 @@ define([
             this.$el.html(this.template({"model":this.model}));
             var height = window.innerHeight ;
             var width = window.innerWidth;
-            var ios7height;  
+            var ios7height = 0;  
             if( $('body').has("ios") && parseInt(localStorage.getItem("deviceVersion")) >= 7.0){ 
                 ios7height = -20;
               }
             
             $('.person').height(height*0.88+ios7height);
-            $('.person').width(width);
+            if(window.localStorage.getItem("device") !== "iPad"){
+                $('.person').width(width);
+            }else{
+                $('.person').width("370px");
+            }    
             return this;    
         },
         

@@ -7,7 +7,7 @@
             <div class="bname"><%= model.get("Coach").MobileNr %></div>
             <div class="bname"><%= model.get("Coach").Community %></div>  
             <div>
-                <% if (model.get("Coach").FacebookID != "") { %>
+                <% if (model.get("Coach").FacebookID && model.get("Coach").FacebookID != "") { %>
                     <div id="icon_facebook" class="facebook">&nbsp;</div>
                 <% } %>
                 <% if (model.get("Coach").TwitterID != "") { %>

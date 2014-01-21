@@ -46,7 +46,17 @@ define([
             this.renderedView = this.template({"model":this.model});
             this.$el.html(this.renderedView);
             
-            
+            $('a').on('click',function(e){
+                 e.preventDefault();
+            e.stopPropagation();
+                            var self = this;
+            window.clearTimeout(timer);
+            timer = window.setTimeout(
+                function(){
+                    var ref = window.open($(self).attr('href') , '_blank', 'location=yes');
+                    ref.addEventListener('loadstart', function() {  });
+                },450); 
+});
             return this.renderedView;    
         }
                                        

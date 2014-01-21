@@ -63,6 +63,27 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/android/notification.js",
+        "id": "org.apache.cordova.dialogs.notification_android",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.vibration/www/vibration.js",
+        "id": "org.apache.cordova.vibration.notification",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -73,7 +94,9 @@ module.exports.metadata =
     "org.apache.cordova.inappbrowser": "0.2.4",
     "org.apache.cordova.plugin.sms": "0.1.0",
     "com.phonegap.plugins.PushPlugin": "2.1.1",
-    "org.apache.cordova.console": "0.2.5"
+    "org.apache.cordova.console": "0.2.5",
+    "org.apache.cordova.dialogs": "0.2.4",
+    "org.apache.cordova.vibration": "0.3.5"
 }
 // BOTTOM OF METADATA
 });

@@ -9,7 +9,7 @@ define([
         initialize: function(){
         },
         model:NewsModel,
-        url:'xml-feed.html',
+        url:'http://www.sportindebuurt.nl/contact/nieuws/xml-feed.html',
         
           fetch: function (options) {
         options = options || {};

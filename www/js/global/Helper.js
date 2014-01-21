@@ -21,6 +21,9 @@ define([
 
         activePageClass: 'active-page',
         
+        
+        
+        
         /**
          * @name Helper#silentGo
          * @function

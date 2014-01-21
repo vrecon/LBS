@@ -65,7 +65,7 @@ html body .pages {
 }
 
 .pages #newsitem{
-     background: rgba(255,255,255,1);
+    background: rgba(255,255,255,1);
 }  
 
 
@@ -106,8 +106,6 @@ html body .pages.open .page-shader {
 .page.active-page {
     display: block;
 }
-
-
 
 /* line 79, ../../../app/styles/_global.scss */
 .page nav {
@@ -184,8 +182,7 @@ body {
 @media only screen and (min-device-width : 768px)  {    
     
     html body .pages {
-        background-image:url('../imgs/BG ipad.png')!important;
-        background-size: auto;
+        background-image:url('../imgs/ipad/blanko-ipad.png')!important;
     }    
 /* line 136, ../../../app/styles/_global.scss */
 .page  h1 {
@@ -200,10 +197,10 @@ body {
 }
 .wrap{ 
     width: 100%;
-    height: 81%;
+    height: 51%;
     position: absolute;
-    padding-left: 290px;
-    top: 145px;
+    padding-left: 280px;
+    top: 105px;
     left: 0;
 }
 .box {
@@ -237,9 +234,8 @@ body {
 
 .inner_over_map{
     width:370px;
-    margin:5px; 
-    margin-left:120px    
-        
+    margin:15px;    
+    
 }  
 
 #popUpDiv{
@@ -247,8 +243,8 @@ body {
     position: absolute;
     background-color: rgba(255,255,255, 3.9);
     display: none;
-    top: 55px;
-    left: 120px;
+    top: 70px;
+    left: 15px;
     width: 290px;
     height: 600px;
     overflow: scroll;
@@ -259,8 +255,8 @@ body {
     position: absolute;
     background-color: rgba(255,255,255, 3.9);
     display: none;
-    top: 55px;
-    left: 120px;
+    top: 70px;
+    left: 15px;
     width: 370px;
     height: 600px;
     overflow: scroll;
@@ -280,6 +276,13 @@ body {
     width:290px;
     margin-top:220px;   
 } 
+
+#register{
+    font-family: "Helvetica Neue";
+    font-weight: lighter;
+    color: rgba(255,255,255,0.5);
+    margin-top: 35px;   
+}    
 
 .name{
     width: 290px;
@@ -329,27 +332,40 @@ body {
     height:45px;
 }  
 
+
+
+.bname{
+    margin-left:5px;
+    clear:right;  
+    font-family:"Helvetica Light";   
+    white-space:nowrap;
+    line-height:25px;
+}  
+
 .oname{
     color: rgba(251, 147, 0,1);
-    margin:5px;  
+    margin-left:5px;
     clear:right;    
-    border-bottom:1px solid #959595;  
     font-family:"Helvetica Light";   
     white-space: nowrap;
-    overflow: hidden;
-    margin-bottom: 15px;
-    margin-top: 23px;
+    line-height:25px;
+    margin-top: 5px;
 }
 
-.bname{      
-    margin:5px;  
-    clear:right;    
-    border-bottom:1px solid #959595;   
-    font-family:"Helvetica Light";    
-}
 .personipad{
     height:600px;
 }
+
+#coachdata{
+    border-bottom: 1px solid #959595;
+    margin-left: 5px;
+    margin-right: 5px;   
+}
+#bscdata{
+    border-bottom: 1px solid #959595;
+    margin-left: 5px;
+    margin-right: 5px;   
+} 
 
 #locationdataipad{
     position: relative;
@@ -358,17 +374,26 @@ body {
     margin: 10px;
 } 
 
+
 #contactipad{
     position: absolute;
     height: 45px;
-    bottom: 10px;
+    bottom: 75px;
     width: 100%;
+    margin:auto;
 } 
 
+.colcontactipad{
+    padding-right: 5px;
+    margin: auto;
+    width: 32%;
+    background-color: white;
+    height: 40px;
+}
 #activityipad{
     position:relative;
     top:10px;
-    margin-left:15px;
+    margin-left:20px;
     margin-right:20px;    
     font-family:"Helvetica Light";
     font-size:9px;
@@ -380,8 +405,9 @@ body {
     background-repeat: no-repeat;
     margin-top: 15px;
     width: 25px;
-    height: 45px;   
+    height: 25px;   
     margin:10px;
+    float:right;
 }
 #icon_linkedin{
     background-image: url('../imgs/linkedin.png');
@@ -389,15 +415,65 @@ body {
     background-repeat: no-repeat;
     margin-top: 15px;
     width: 25px;
-    height: 45px;
+    height: 25px;
     margin:10px;
+    float:right;
 }
+
+#icon_facebook{
+    background-image: url('../imgs/facebook.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin-bottom:5px;
+    float: right;
 }
+
+#toplevel-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('../imgs/ipad/home.png')!important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+#sublevel-content.onderwijs{
+    background-image:url('../imgs/ipad/onderwijs.png')!important;
+}
+#sublevel-content.buurt{
+    background-image:url('../imgs/ipad/buurt.png')!important;
+}   
+#sublevel-content.zorg{
+    background-image:url('../imgs/ipad/zorg.png')!important;
+} 
+#sublevel-content.senioren{
+    background-image:url('../imgs/ipad/senioren.png')!important;
+} 
+#sublevel-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.person{
+ position:fixed;   
+}    
+}
+
+/******
+
+IPHONE CSS
+**/
 
 @media only screen and (max-device-width: 767px){
     /*Start login page*/
     html body .pages {
-        background-image:url('../imgs/iphone/blanko.png')!important; 
+        background-image:url('../imgs/iphone/blanko.png')!important;
     }    
 /* line 136, ../../../app/styles/_global.scss */
 .page  h1 {
@@ -441,6 +517,14 @@ body {
     font-size:12px;    
     font-family:"Helvetica Neue";    
 }
+
+
+#register{
+    font-family: "Helvetica Neue";
+    font-weight: lighter;
+    color: rgba(255,255,255,0.5);
+    margin-top: 25px;   
+} 
 
 .smallbox {
     height: 11%;
@@ -538,7 +622,9 @@ body {
 .bname{
     margin:5px;  
     clear:right;  
-    font-family:"Helvetica Light";      
+    font-family:"Helvetica Light";   
+    overflow:hidden;
+    white-space:nowrap;
 }    
 
 #maps-content .bname{     
@@ -589,6 +675,8 @@ body {
     margin-right: 5px;   
 }    
 
+
+
 #toplevel-content{
     width: 100%;
     height: 100%;
@@ -596,7 +684,7 @@ body {
     background-image:url('../imgs/iphone/home.png')!important;;
     background-size:100%;
     background-repeat:no-repeat;
-    background-position:center;    
+    background-size:cover;
 }
 
 #sublevel-content{
@@ -605,20 +693,20 @@ body {
     position: absolute;
     background-size:100%;
     background-repeat:no-repeat;
-    background-position:center;    
+    background-size:cover;   
 }
 
 #sublevel-content.onderwijs{
-    background-image:url('../imgs/iphone/onderwijs.png')!important;;
+    background-image:url('../imgs/iphone/onderwijs.png')!important;
 }
 #sublevel-content.buurt{
-    background-image:url('../imgs/iphone/buurt.png')!important;;
+    background-image:url('../imgs/iphone/buurt.png')!important;
 }   
 #sublevel-content.zorg{
-    background-image:url('../imgs/iphone/zorg.png')!important;;
+    background-image:url('../imgs/iphone/zorg.png')!important;
 } 
 #sublevel-content.senioren{
-    background-image:url('../imgs/iphone/senioren.png')!important;;
+    background-image:url('../imgs/iphone/senioren.png')!important;
 } 
 }
 
@@ -638,7 +726,7 @@ body {
     background-image:url('../imgs/iphone/blanko.png')!important;;
     background-size:100%;
     background-repeat:no-repeat;
-    background-position:center;    
+    background-size:cover;
 }
 
 
@@ -918,9 +1006,9 @@ body {
 }    
 
 #contact{
-    position: fixed;
+    position: absolute;
     height: 45px;
-    bottom: 10px;
+    bottom: 25px;
     width: 100%;
 }    
 
@@ -976,7 +1064,6 @@ body {
 
 .title{
     color:rgba(251, 147, 0,1);   
-    font-size:11px;
 }    
 .date{
     background-color:transparent;   
@@ -986,6 +1073,7 @@ body {
 }  
 
 .topnews{
+    clear:left;
     margin-bottom:5px;
 }    
 
@@ -997,7 +1085,7 @@ body {
 }  
 
 .meer{
-     color:rgba(251, 147, 0,1);   
+    color:rgba(251, 147, 0,1);   
 }    
 
 
@@ -1045,7 +1133,7 @@ body {
 #newsitem-content .nieuwsback{
     margin-top: 0px; 
 }    
-   
+
 /* Transitions */
 /* slide x */
 /* line 3, ../../../app/styles/_transitions.scss */
