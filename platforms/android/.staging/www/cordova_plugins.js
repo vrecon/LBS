@@ -96,7 +96,8 @@ module.exports.metadata =
     "com.phonegap.plugins.PushPlugin": "2.1.1",
     "org.apache.cordova.console": "0.2.5",
     "org.apache.cordova.dialogs": "0.2.4",
-    "org.apache.cordova.vibration": "0.3.5"
+    "org.apache.cordova.vibration": "0.3.5",
+    "com.jamiestarke.webviewdebug": "1.0.4"
 }
 // BOTTOM OF METADATA
 });

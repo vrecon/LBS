@@ -22,16 +22,20 @@ package nl.vrecon.BSC;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class BSC extends CordovaActivity 
+
+
+import android.os.Bundle;
+import org.apache.cordova.*;
+
+public class BSC extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        super.init();
-        // Set by <content src="index.html" /> in config.xml
+    	super.onCreate(savedInstanceState);
+    	super.setIntegerProperty("splashscreen", R.drawable.splashscreen);
+        
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
     }
 }
-

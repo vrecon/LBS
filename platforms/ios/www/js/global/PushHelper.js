@@ -63,7 +63,7 @@ define([
                 console.log(req.responseText + " " + status);
             }  
         
-  this.addCallback('PushHelper.notificationHandler', PushHelper.notificationHandler);
+ PushHelper.addCallback('notificationHandler', PushHelper.notificationHandler);
  },
  
  registrationFailedHandler : function(error) {
@@ -73,12 +73,7 @@ define([
  notificationHandler : function(evt) {
   console.log("received a notification: " + evt.alert);
   navigator.notification.beep(3);
-  if(evt.alert) {
-   this.addNotification(evt.alert);
-  }
-  if(evt.prop){
-   this.addNotification(" received a special property: " + evt.prop);
-  }
+PushHelper.showAlert(evt.alert,"Straatcoaches");
  },
  
 register : function() {
@@ -88,7 +83,7 @@ var self= this;
                            "badge":"true",
                            "sound":"true",
                            "alert":"true",
-                           "ecb":"PushHelper.notificationHandler"
+                           "ecb":"callbacks.notificationHandler"
                            });
 },
  

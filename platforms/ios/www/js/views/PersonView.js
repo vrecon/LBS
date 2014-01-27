@@ -35,11 +35,11 @@ define([
             e.stopPropagation();      
             document.location.href = 'mailto:'+this.model.get("Coach").Email;
         },
- 
+        
         sms : function(e){
             e.preventDefault();
             e.stopPropagation();      
-             var number = this.model.get("Coach").MobileNr;
+            var number = this.model.get("Coach").MobileNr;
             var message = "";
             var intent = "INTENT"; //leave empty for sending sms using default intent
             var success = function () { console.log('Message sent successfully'); };
@@ -79,7 +79,7 @@ define([
                 },450); 
             
         },
-
+        
         facebook : function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -98,18 +98,14 @@ define([
             this.render();    
         },
         render: function () {
-             this.statusBar();
+            this.statusBar();
             var self = this;
-            var worklocations = window.localStorage.getItem("worklocations");
-            if(worklocations){
-                var person = _.filter(JSON.parse(worklocations),function(location){
-                    return location.ID == self.id;
-                });    
-                this.model= new ItemModel(_.first(person));
-            }else{
-                this.model= new ItemModel();
-            }
-            if(window.localStorage.getItem("device") !== "iPad"){
+             var id = self.id;
+           
+                var selectedPerson = window.localStorage.getItem("selectedPerson"); 
+                this.model= new ItemModel(JSON.parse(selectedPerson));
+
+             if(window.localStorage.getItem("device") !== "iPad"){    
                 this.setElement($('#person-content'));
             }    
             this.$el.html(this.template({"model":this.model}));
@@ -118,7 +114,7 @@ define([
             var ios7height = 0;  
             if( $('body').has("ios") && parseInt(localStorage.getItem("deviceVersion")) >= 7.0){ 
                 ios7height = -20;
-              }
+            }
             
             $('.person').height(height*0.88+ios7height);
             if(window.localStorage.getItem("device") !== "iPad"){

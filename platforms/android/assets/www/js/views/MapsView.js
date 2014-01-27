@@ -4,14 +4,16 @@ define([
     'backbone',
     'gmap',
     'global/Helper',
+    'global/BaseView',  
     'collections/Collection',
+    'models/ItemModel',
     'views/PersonView',
     'text!templates/maps.html',
     'text!templates/xml/worklocations.xml', 
     'text!templates/ipadperson.html', 
-], function($, _, Backbone, googleMap,Helper,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
+], function($, _, Backbone, googleMap,Helper,BaseView,mapCollection,mapModel,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
     
-    var MapsView = Backbone.View.extend({
+    var MapsView = BaseView.extend({
         template:_.template(mapTemplate),
         identifier: 'maps',
         model:null,
@@ -22,7 +24,7 @@ define([
             "touchstart .icon-glass":"popupSectors",  
             "touchstart .rmsector":"rmPopupSectors",
             "touchstart .sector":"popupSectors",    
-            "touchstart #icon_more":"person",
+            "click #icon_more":"person",
             "touchstart .locatie":"locatie",
             "touchstart #popUpDiv li":"reupdate",
             'touchstart #map-canvas':"hideUnder"
@@ -32,15 +34,16 @@ define([
         hideUnder: function(e){
             e.preventDefault();
             e.stopPropagation();
-             var height = window.innerHeight 
-             $('#map-canvas').height(height);
+            var height = window.innerHeight 
+            $('#map-canvas').height(height);
+            $("#popUpPerson").hide();
             $('#under_map').hide();
         },
         
         locatie : function(e){
             e.preventDefault();
             e.stopPropagation();
-            this.updateMap();
+            this.map.setCenter(this.latlng);
         },
         
         menu : function(e){
@@ -51,8 +54,17 @@ define([
         
         person : function(e){
             e.preventDefault();
-            e.stopPropagation();
-            Helper.go("#person/"+this.model.get("ID"));
+            e.stopImmediatePropagation();
+            var self=this;
+            window.clearTimeout(timer);
+            timer = window.setTimeout(
+                function(){
+                    if(self.model){
+                        localStorage.setItem("selectedPerson",JSON.stringify(self.model));
+                        Helper.go("#person/"+self.model.get("ID"));
+                    }
+                },450); 
+            
         },
         
         popupSectors : function(e){
@@ -77,12 +89,12 @@ define([
         },   
         
         initialize: function(){
-            Helper.setPageContent('#maps-content', this.$el); 
-            
+            Helper.setPageContent('#maps-content', this.$el);  
             this.render();
         },
         
         render: function(){
+            this.statusBar();
             this.setElement($('#maps-content'));    
             this.renderedView = this.template();
             this.$el.html(this.renderedView);
@@ -129,18 +141,18 @@ define([
                 
                 function success(lat, lng){
                     
-                    var latlng = new google.maps.LatLng(lat, lng); 
+                    self.latlng = new google.maps.LatLng(lat, lng); 
                     var mapOptions = {
-                        zoom: 10,
-                        center: latlng,
+                        zoom: 12,
+                        center: self.latlng,
                         disableDefaultUI: true,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    var map = new google.maps.Map(document.getElementById("map-canvas"),
-                                                  mapOptions);   
+                    self.map = new google.maps.Map(document.getElementById("map-canvas"),
+                                                   mapOptions);   
                     // Create marker 
                     self.collection = new mapCollection();
-                    self.getMarkers(lat,lng, map);
+                    self.getMarkers(lat,lng);
                     
                     
                 } 
@@ -159,7 +171,7 @@ define([
             
         },
         
-        getMarkers :function(lat,lng,map){
+        getMarkers :function(lat,lng){
             var self = this;
             var currentSector = window.localStorage.getItem("currentSector");
             
@@ -175,7 +187,7 @@ define([
             };
             var soapRequest = createXML(); 
             var wsUrl = "http://bsc-api.viperonline.nl/secureservices/export.asmx?op=GetWorkLocations";
-            $.ajax({
+            $.ajax({ 
                 type: "POST",
                 url: wsUrl,
                 contentType: "text/xml",
@@ -189,16 +201,25 @@ define([
                 
                 if (status == "success"){
                     json = $.xml2json(response);
+                    var errorCode = json.Body.GetWorkLocationsResponse.GetWorkLocationsResult.ErrorCode
+                    if(errorCode != "0"){
+                        window.localStorage.removeItem("token");
+                        Helper.go("#login");
+                        return;
+                    }    
+                    
+                    
                     var workLocation =json.Body.GetWorkLocationsResponse.GetWorkLocationsResult.Locations.WorkLocation;
                     window.localStorage.setItem("worklocations",JSON.stringify(workLocation));    
                     self.collection.reset(workLocation);
                     //   self.collection.bind("reset", function(){self.render();}, self);
-                    self.drawMarkers(map,self);
-                    google.maps.event.trigger(map, "resize");
-                    map.setZoom( map.getZoom() );
-                    map.setCenter(new google.maps.LatLng(lat,lng));
+                    self.drawMarkers(self);
+                    google.maps.event.trigger(self.map, "resize");
+                    if(!localStorage.getItem("selectedPerson")){
+                        self.map.setZoom( self.map.getZoom() );
+                        self.map.setCenter(new google.maps.LatLng(lat,lng));
+                    }
                 }
-                
             }
             
             function processError(data, status, req) {
@@ -206,41 +227,87 @@ define([
             }     
         },
         
-        drawMarkers: function(map,self){
-            _.each(self.collection.models,function(coords){
-                var loc = new google.maps.LatLng(coords.get("GeoLatitude"), coords.get("GeoLongitude"));
+        drawMarkers: function(self){
+            var indexes = self.findDuplicates(self.collection);
+            _.each(self.collection.models,function(coords,i){
+                var adjusted_lat,adjusted_lon;
+                if(indexes.indexOf(i) != -1){
+                    adjusted_lat = parseFloat(coords.get("GeoLatitude")) + (Math.random() -.5) / 750;
+                    adjusted_lon = parseFloat(coords.get("GeoLongitude")) + (Math.random() -.5) / 750;   
+                }else{
+                    adjusted_lat = coords.get("GeoLatitude");
+                    adjusted_lon = coords.get("GeoLongitude");
+                }    
+                var loc = new google.maps.LatLng(adjusted_lat, adjusted_lon);
                 var marker = new google.maps.Marker({
                     position: loc,
-                    map: map,
+                    map: self.map,
                     title:coords.get("ID")
                 });
                 google.maps.event.addListener(marker, 'click', function() {
-                    map.setZoom(12);
+                    self.map.setZoom(14);
                     self.model=coords;
+                    
                     if(window.localStorage.getItem("device") === "iPad"){
                         self.showPerson();
                     }else{
-                    var height = window.innerHeight ;
-                    $('#map-canvas').height(height*0.75);
-                    $('#under_map').show();
-                    $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
-                    $("#bscorganisation").html(coords.get("Name"));
+                        self.showPersonPhone(self.map,coords);
                     }   
                     
-                    map.setCenter(marker.getPosition());
+                    self.map.setCenter(marker.getPosition());
                 });     
                 
             });
+            
+            if(localStorage.getItem("selectedPerson")){
+                self.model= new mapModel(JSON.parse(localStorage.getItem("selectedPerson")));
+                self.showPersonPhone( self.map,self.model);
+            }    
+        },
+        
+        showPersonPhone: function(map,coords){
+            var height = window.innerHeight ;
+            $('#map-canvas').height(height*0.75);
+            $('#under_map').show();
+            $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
+            $("#bscorganisation").html(coords.get("Name"));  
+            var loc = new google.maps.LatLng(coords.get("GeoLatitude"), coords.get("GeoLongitude"));
+            map.setCenter(loc);
         },
         
         showPerson : function(){
             var view = new PersonView();
             view.template =  _.template(ipadperson),
-            view.setElement("#popUpPerson");
-            view.id = this.model.get("ID");
+                view.setElement("#popUpPerson");
+           localStorage.setItem("selectedPerson",JSON.stringify(this.model));
             view.render(); 
             $("#popUpPerson").show();
-        }    
+        },
+        
+        findDuplicates : function(collection){
+            
+            var modelArray = [];
+            _.each(collection.models,function(model) {
+                var a = model.get("GeoLongitude");
+                modelArray.push(a);    
+            });
+            
+            var lowest = Math.min.apply(Math, modelArray);     //Find the lowest number
+            var count = 0;                                //Set a count variable
+            var indexes = [];              //New array to store indexes of lowest number
+            
+            for(var i=0; i<modelArray.length;i++) //Loop over your array
+            {
+                if(modelArray[i] == lowest) //If the value is equal to the lowest number
+                {
+                    indexes.push(i); //Push the index to your index array
+                    count++;         //Increment your counter
+                }
+            }
+            
+            
+            return indexes;
+        },    
         
     });
     return MapsView;

@@ -11,16 +11,18 @@
             Residence:" ",
             Sector:" ",    
             Description:" ",
-            Surname:"Persoon",
+            Surname:"",
             Coach:{
-            Clamourname:"Test",    
-            Email:"test@vrecon.nl",
-            MobileNr:"06-12345678",
+            Clamourname:"",    
+            Email:"",
+            MobileNr:"",
             MiddleName:" ",
-            Community:"Den Haag",
+            Community:"",
             ExtraCommunity:" ",
-            LinkedInID:" ",
-            TwitterID:" "    
+            FacebookID:"",
+            LinkedInID:"",
+            TwitterID:"",
+                  
             },    
             
             },

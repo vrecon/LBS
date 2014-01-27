@@ -6,11 +6,12 @@ define([
     'global/Helper',
     'global/BaseView',  
     'collections/Collection',
+    'models/ItemModel',
     'views/PersonView',
     'text!templates/maps.html',
     'text!templates/xml/worklocations.xml', 
     'text!templates/ipadperson.html', 
-], function($, _, Backbone, googleMap,Helper,BaseView,mapCollection,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
+], function($, _, Backbone, googleMap,Helper,BaseView,mapCollection,mapModel,PersonView,mapTemplate,xmlWorkLocations,ipadperson){
     
     var MapsView = BaseView.extend({
         template:_.template(mapTemplate),
@@ -23,7 +24,7 @@ define([
             "touchstart .icon-glass":"popupSectors",  
             "touchstart .rmsector":"rmPopupSectors",
             "touchstart .sector":"popupSectors",    
-            "touchstart #icon_more":"person",
+            "click #icon_more":"person",
             "touchstart .locatie":"locatie",
             "touchstart #popUpDiv li":"reupdate",
             'touchstart #map-canvas':"hideUnder"
@@ -53,10 +54,17 @@ define([
         
         person : function(e){
             e.preventDefault();
-            e.stopPropagation();
-            if(this.model){
-                Helper.go("#person/"+this.model.get("ID"));
-            }
+            e.stopImmediatePropagation();
+            var self=this;
+            window.clearTimeout(timer);
+            timer = window.setTimeout(
+                function(){
+                    if(self.model){
+                        localStorage.setItem("selectedPerson",JSON.stringify(self.model));
+                        Helper.go("#person/"+self.model.get("ID"));
+                    }
+                },450); 
+            
         },
         
         popupSectors : function(e){
@@ -207,10 +215,11 @@ define([
                     //   self.collection.bind("reset", function(){self.render();}, self);
                     self.drawMarkers(self);
                     google.maps.event.trigger(self.map, "resize");
-                    self.map.setZoom( self.map.getZoom() );
-                    self.map.setCenter(new google.maps.LatLng(lat,lng));
+                    if(!localStorage.getItem("selectedPerson")){
+                        self.map.setZoom( self.map.getZoom() );
+                        self.map.setCenter(new google.maps.LatLng(lat,lng));
+                    }
                 }
-                
             }
             
             function processError(data, status, req) {
@@ -223,11 +232,11 @@ define([
             _.each(self.collection.models,function(coords,i){
                 var adjusted_lat,adjusted_lon;
                 if(indexes.indexOf(i) != -1){
-                adjusted_lat = parseFloat(coords.get("GeoLatitude")) + (Math.random() -.5) / 750;
-                adjusted_lon = parseFloat(coords.get("GeoLongitude")) + (Math.random() -.5) / 750;   
-               }else{
+                    adjusted_lat = parseFloat(coords.get("GeoLatitude")) + (Math.random() -.5) / 750;
+                    adjusted_lon = parseFloat(coords.get("GeoLongitude")) + (Math.random() -.5) / 750;   
+                }else{
                     adjusted_lat = coords.get("GeoLatitude");
-                   adjusted_lon = coords.get("GeoLongitude");
+                    adjusted_lon = coords.get("GeoLongitude");
                 }    
                 var loc = new google.maps.LatLng(adjusted_lat, adjusted_lon);
                 var marker = new google.maps.Marker({
@@ -238,27 +247,39 @@ define([
                 google.maps.event.addListener(marker, 'click', function() {
                     self.map.setZoom(14);
                     self.model=coords;
+                    
                     if(window.localStorage.getItem("device") === "iPad"){
                         self.showPerson();
                     }else{
-                        var height = window.innerHeight ;
-                        $('#map-canvas').height(height*0.75);
-                        $('#under_map').show();
-                        $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
-                        $("#bscorganisation").html(coords.get("Name"));
+                        self.showPersonPhone(self.map,coords);
                     }   
                     
                     self.map.setCenter(marker.getPosition());
                 });     
                 
             });
+            
+            if(localStorage.getItem("selectedPerson")){
+                self.model= new mapModel(JSON.parse(localStorage.getItem("selectedPerson")));
+                self.showPersonPhone( self.map,self.model);
+            }    
+        },
+        
+        showPersonPhone: function(map,coords){
+            var height = window.innerHeight ;
+            $('#map-canvas').height(height*0.75);
+            $('#under_map').show();
+            $("#bscname").html((coords.get("Coach").Clamourname+" "+coords.get("Coach").MiddleName).trim() +" "+coords.get("Coach").Surname);
+            $("#bscorganisation").html(coords.get("Name"));  
+            var loc = new google.maps.LatLng(coords.get("GeoLatitude"), coords.get("GeoLongitude"));
+            map.setCenter(loc);
         },
         
         showPerson : function(){
             var view = new PersonView();
             view.template =  _.template(ipadperson),
                 view.setElement("#popUpPerson");
-            view.id = this.model.get("ID");
+           localStorage.setItem("selectedPerson",JSON.stringify(this.model));
             view.render(); 
             $("#popUpPerson").show();
         },
@@ -267,8 +288,8 @@ define([
             
             var modelArray = [];
             _.each(collection.models,function(model) {
-                      var a = model.get("GeoLongitude");
-             modelArray.push(a);    
+                var a = model.get("GeoLongitude");
+                modelArray.push(a);    
             });
             
             var lowest = Math.min.apply(Math, modelArray);     //Find the lowest number

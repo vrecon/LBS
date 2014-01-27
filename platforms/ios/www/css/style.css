@@ -340,6 +340,7 @@ body {
     font-family:"Helvetica Light";   
     white-space:nowrap;
     line-height:25px;
+    text-overflow:ellipsis;
 }  
 
 .oname{
@@ -350,6 +351,7 @@ body {
     white-space: nowrap;
     line-height:25px;
     margin-top: 5px;
+    text-overflow:ellipsis;
 }
 
 .personipad{
@@ -616,7 +618,8 @@ IPHONE CSS
 #maps-content .oname{
     border-bottom:1px solid #959595;  
     margin-top:20px;
-    margin-bottom:18px   
+    margin-bottom:18px;  
+        text-overflow:ellipsis;
 }
 
 .bname{
@@ -629,6 +632,7 @@ IPHONE CSS
 
 #maps-content .bname{     
     border-bottom:1px solid #959595;   
+    text-overflow:ellipsis;
 }
 
 #icon_twitter{

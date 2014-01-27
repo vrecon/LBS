@@ -38,8 +38,9 @@
             this.render();    
         },
         render: function () {
-                         this.statusBar();
+            this.statusBar();
             var subLevels = this.getSubLevel(this.id);
+            window.localStorage.removeItem("selectedPerson");
             if(this.id){
                 $("#sublevel-content").removeClass();
                 $('#sublevel-content').addClass(this.id.toLowerCase());
