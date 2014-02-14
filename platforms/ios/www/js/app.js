@@ -56,15 +56,15 @@ define([
                 }
             }());
             
-          if($('body').hasClass('deviceready')){
+     //     if($('body').hasClass('deviceready')){
                 this._publishViews();
-        } else {
+   //     } else {
           
                 /* initialize the App only when deviceready event was fired.
 				* Thus ensuring all cordova stuuf was loaded properly
 				*/
-                this._bindEvents();
-           }
+       //         this._bindEvents();
+         //  }
         },
         
         

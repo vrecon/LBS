@@ -39,7 +39,7 @@ define([
  registrationSuccessHandler : function(token) {
   console.log('successful registration with a return token: ' + token);
      console.log('device token = ' + token);
-                 var sendInfo = { "token": token};
+                 var sendInfo = { "token": token,"device":"IOS"};
 
   
                  $.ajax({

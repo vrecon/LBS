@@ -23,8 +23,8 @@ mysql.query('use ' + DATABASE);
  
 exports.addId = function(req, res) {
     var push = req.body.token;
-    console.log(push);
-    mysql.query('insert into '+ TABLE +'(appname,pushid) values ("BSC",+"'+push+'")',
+    var device = req.body.device;
+    mysql.query('insert into '+ TABLE +'(appname,pushid,device) values ("BSC",+"'+push+'",+"'+device+'")',
     function selectCb(err, results, fields) {
     if (err) throw err;
     else console.log('success');

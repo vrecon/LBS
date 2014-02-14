@@ -52,20 +52,24 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="SplashScreen" value="splashscreen" />
+    <preference name="SplashScreenDelay" value="10000" />
     <icon src="icon.png" />
     <icon gap:density="ldpi" gap:platform="android" src="res/drawable/icon.png" />
     <icon gap:density="mdpi" gap:platform="android" src="res/drawable-mdpi/icon.png" />
     <icon gap:density="hdpi" gap:platform="android" src="res/drawable-hdpi/icon.png" />
-    <icon gap:density="xhdpi" gap:platform="android"  src="res/drawable-xhdpi/icon.png" />
+    <icon gap:density="xhdpi" gap:platform="android" src="res/drawable-xhdpi/icon.png" />
     <gap:splash gap:density="ldpi" gap:platform="android" src="res/drawable/screen-ldpi-portrait.png" />
     <gap:splash gap:density="mdpi" gap:platform="android" src="res/drawable/screen-mdpi-portrait.png" />
     <gap:splash gap:density="hdpi" gap:platform="android" src="res/drawable/screen-hdpi-portrait.png" />
     <gap:splash gap:density="xhdpi" gap:platform="android" src="res/drawable/screen-xhdpi-portrait.png" />
-
     <access origin="*" />
     <content src="index.html" />
     <feature name="WebViewDebug">
         <param name="android-package" value="com.jamiestarke.webviewdebug.WebViewDebug" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
 </widget>
