@@ -136,11 +136,11 @@ onNotificationGCM : function(e) {
             break;
             
         case 'error':
-        	alert("GCM error");
+        	console.log("GCM error");
             break;
             
         default:
-        	alert("Unknown event was triggered");
+        	console.log("Unknown event was triggered");
             break;
     }
 },
