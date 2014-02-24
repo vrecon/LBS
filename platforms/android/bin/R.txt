@@ -1,5 +1,6 @@
+int bool portrait_only 0x7f050000
 int drawable icon 0x7f020000
 int drawable splashscreen 0x7f020001
 int layout main 0x7f030000
-int string app_name 0x7f050000
+int string app_name 0x7f060000
 int xml config 0x7f040000

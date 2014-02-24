@@ -34,7 +34,7 @@ define([
             window.clearTimeout(timer);
             timer = window.setTimeout(
                 function(){
-                    var ref = window.open("http://www.sportindebuurt.nl/contact/registreren/" , '_blank', 'location=yes');
+                    var ref = window.open("http://www.sportindebuurt.nl/buurtsportcoaches/kwaliteitsimpuls-buurtsportcoaches/" , '_blank', 'location=yes');
                     ref.addEventListener('loadstart', function() {  });
                 },450); 
 

@@ -563,7 +563,7 @@ IPHONE CSS
     top: 55px;
     left: 10px;
     width: 290px;
-    height: 300px;
+    height: 600px;
     overflow: scroll;
 }
 
@@ -833,7 +833,7 @@ IPHONE CSS
 } 
 
 .sector{
-    margin-left:10px;
+    margin-left:5px;
 }    
 .icon-glass{
     background-image: url('../imgs/vergroot.png');

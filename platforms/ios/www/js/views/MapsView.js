@@ -27,7 +27,7 @@ define([
             "click #icon_more":"person",
             "touchstart .locatie":"locatie",
             "touchstart #popUpDiv li":"reupdate",
-            'touchstart #map-canvas':"hideUnder"
+            "touchstart #map-canvas":"hideUnder"
         },    
         
         
@@ -110,10 +110,13 @@ define([
             e.preventDefault();
             e.stopPropagation();
             var id = e.currentTarget.id;
+            $("#under_map").hide();
+            var height = window.innerHeight ;
+            $('#map-canvas').height(height);
+            window.localStorage.removeItem("selectedPerson");
             localStorage.setItem("currentSector",id);
             this.updateMap();
             this.rmPopupSectors(e);
-            
         },    
         
         updateMap : function(){
@@ -278,7 +281,7 @@ define([
         showPerson : function(){
             var view = new PersonView();
             view.template =  _.template(ipadperson),
-                view.setElement("#popUpPerson");
+            view.setElement("#popUpPerson");
            localStorage.setItem("selectedPerson",JSON.stringify(this.model));
             view.render(); 
             $("#popUpPerson").show();

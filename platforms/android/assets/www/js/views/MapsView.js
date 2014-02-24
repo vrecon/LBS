@@ -23,13 +23,15 @@ define([
             "touchstart .icon-cancel":"rmPopupSectors",
             "touchstart .icon-glass":"popupSectors",  
             "touchstart .rmsector":"rmPopupSectors",
-            "touchstart .sector":"popupSectors",    
-            "click #icon_more":"person",
+            "click .sector":"popupSectors",    
+            "touchstart .more":"person",
             "touchstart .locatie":"locatie",
             "touchstart #popUpDiv li":"reupdate",
-            'touchstart #map-canvas':"hideUnder"
+            'touchstart #map-canvas':"hideUnder",
         },    
         
+        
+
         
         hideUnder: function(e){
             e.preventDefault();
@@ -110,6 +112,8 @@ define([
             e.preventDefault();
             e.stopPropagation();
             var id = e.currentTarget.id;
+            localStorage.removeItem("selectedPerson");
+            $('#under_map').hide();
             localStorage.setItem("currentSector",id);
             this.updateMap();
             this.rmPopupSectors(e);
@@ -223,7 +227,7 @@ define([
             }
             
             function processError(data, status, req) {
-                alert(req.responseText + " " + status);
+                console.log(req.responseText + " " + status);
             }     
         },
         
@@ -278,7 +282,7 @@ define([
         showPerson : function(){
             var view = new PersonView();
             view.template =  _.template(ipadperson),
-                view.setElement("#popUpPerson");
+            view.setElement("#popUpPerson");
            localStorage.setItem("selectedPerson",JSON.stringify(this.model));
             view.render(); 
             $("#popUpPerson").show();

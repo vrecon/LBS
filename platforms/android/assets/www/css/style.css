@@ -246,7 +246,7 @@ body {
     top: 70px;
     left: 15px;
     width: 290px;
-    height: 600px;
+    height: 800px;
     overflow: scroll;
 }
 
@@ -561,8 +561,8 @@ IPHONE CSS
     top: 55px;
     left: 10px;
     width: 290px;
-    height: 300px;
-    overflow: scroll;
+    height: 600px;
+    overflow: auto;
 }
 
 .login{
@@ -829,7 +829,7 @@ IPHONE CSS
 } 
 
 .sector{
-    margin-left:10px;
+    margin-left:5px;
 }    
 .icon-glass{
     background-image: url('../imgs/vergroot.png');
@@ -1007,8 +1007,8 @@ IPHONE CSS
 
 #contact{
     position: absolute;
-    height: 45px;
-    bottom: 25px;
+    height: 35px;
+    bottom: 20px;
     width: 100%;
 }    
 

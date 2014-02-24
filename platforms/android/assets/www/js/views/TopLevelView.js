@@ -37,7 +37,6 @@ define([
             var topLevels = this.getTopLevels();
             this.setElement($('#toplevel-content'));
             this.$el.html(this.template({"topLevels":topLevels}));
-            
             return this;    
         },
         getTopLevels : function(){

@@ -5,8 +5,9 @@ define([
     'backbone',
     'router',
     'global/Helper',
-    'BSC'           // Request router.js
-], function($, _, Backbone, Router,Helper,BSC){
+    'BSC',
+    'text!templates/xml/worklocations.xml'
+], function($, _, Backbone, Router,Helper,BSC,xmlWorkLocations){
     
     
     // Provide a global location to place configuration settings and module
@@ -122,6 +123,11 @@ define([
                 case 'deviceready':
                     $('body').addClass('deviceready');
                     this.init();
+                    var token = window.localStorage.getItem("token");
+                    if(token){
+                    	this.checkToken();
+                    }
+                    
                     break;
                 case 'resume':
                     //implement
@@ -132,6 +138,51 @@ define([
                 default:
                     break;
             }
+        },
+        
+        
+        
+        checkToken: function(){
+            var currentSector = "O_SPORT";            
+            var createXML = function() {
+                
+                return _.template(xmlWorkLocations, {
+                    token :  window.localStorage.getItem("token"),
+                    latitude : "52.374004" , // latitude longitude of amsterdam for valid token check
+                    longitude :"4.890359" ,
+                    sector:currentSector,
+                    radius:0
+                });
+            };
+            var soapRequest = createXML(); 
+            var wsUrl = "http://bsc-api.viperonline.nl/secureservices/export.asmx?op=GetWorkLocations";
+            $.ajax({ 
+                type: "POST",
+                url: wsUrl,
+                contentType: "text/xml",
+                dataType: "xml",
+                data: soapRequest,
+                success: processSuccess,
+                error: processError
+            });
+            
+            function processSuccess(response, status, req) {
+                
+                if (status == "success"){
+                    json = $.xml2json(response);
+                    var errorCode = json.Body.GetWorkLocationsResponse.GetWorkLocationsResult.ErrorCode
+                    if(errorCode != "0"){
+                        window.localStorage.removeItem("token");
+
+                        return;
+                    }    
+                }
+            }
+            
+                function processError(data, status, req) {
+                    console.log(req.responseText + " " + status);
+                }   
+                
         },
         
         
