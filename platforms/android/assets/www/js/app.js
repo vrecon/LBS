@@ -58,13 +58,13 @@ define([
             }());
             
           if($('body').hasClass('deviceready')){
-                this._publishViews();
+               this._publishViews();
         } else {
           
                 /* initialize the App only when deviceready event was fired.
 				* Thus ensuring all cordova stuuf was loaded properly
 				*/
-                this._bindEvents();
+               this._bindEvents();
            }
         },
         
@@ -122,11 +122,12 @@ define([
             switch (id) {
                 case 'deviceready':
                     $('body').addClass('deviceready');
-                    this.init();
                     var token = window.localStorage.getItem("token");
                     if(token){
                     	this.checkToken();
                     }
+                    this.init();
+             
                     
                     break;
                 case 'resume':

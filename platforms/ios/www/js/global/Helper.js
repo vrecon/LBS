@@ -86,9 +86,9 @@ define([
          */
         isPageActive : function(path) {
             path = this.getRootPath(path).replace(/#/, "");
-            if (this.activePage) {
-                return this.activePage.attr("id") === path;
-            }
+           // if (this.activePage) {
+           //     return this.activePage.attr("id") === path;
+           // }
         },
 
         showPage : function(path, callback, navigate) {

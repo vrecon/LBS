@@ -122,10 +122,12 @@ define([
             switch (id) {
                 case 'deviceready':
                     $('body').addClass('deviceready');
-                    this.init();
-                    if(token){
-                        this.checkToken();
-                    }
+       var token = window.localStorage.getItem("token");
+       if(token){
+       this.checkToken();
+       }
+       this.init();
+
                     break;
                 case 'resume':
                     //implement

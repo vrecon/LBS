@@ -50,7 +50,10 @@ define([
         back : function(e){
             e.preventDefault();
             e.stopPropagation();  
-            Helper.go("#maps");
+            $(".page").removeClass("active-page");
+            $("#maps").addClass("active-page");
+             $("#person-content").html("");
+        
         },    
         
         twitter:function(e){

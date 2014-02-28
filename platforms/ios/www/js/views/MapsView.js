@@ -24,7 +24,7 @@ define([
             "touchstart .icon-glass":"popupSectors",  
             "touchstart .rmsector":"rmPopupSectors",
             "touchstart .sector":"popupSectors",    
-            "click #icon_more":"person",
+            "touchend .more":"person",
             "touchstart .locatie":"locatie",
             "touchstart #popUpDiv li":"reupdate",
             "touchstart #map-canvas":"hideUnder"
@@ -57,12 +57,11 @@ define([
             e.stopImmediatePropagation();
             var self=this;
             window.clearTimeout(timer);
+
             timer = window.setTimeout(
                 function(){
-                    if(self.model){
-                        localStorage.setItem("selectedPerson",JSON.stringify(self.model));
+                    self.model= new mapModel(JSON.parse(localStorage.getItem("selectedPerson")));
                         Helper.go("#person/"+self.model.get("ID"));
-                    }
                 },450); 
             
         },
@@ -75,7 +74,9 @@ define([
             $(".icon-glass").addClass("icon-cancel");
             $(".icon-glass").removeClass("icon-glass");
             $(".sector").removeClass("sector");
+            $("#popUpPerson").hide();
             $("#popUpDiv").show();
+                                   
         },    
         
         rmPopupSectors : function(e){
@@ -250,7 +251,8 @@ define([
                 google.maps.event.addListener(marker, 'click', function() {
                     self.map.setZoom(14);
                     self.model=coords;
-                    
+                                              
+                      localStorage.setItem("selectedPerson",JSON.stringify(self.model));
                     if(window.localStorage.getItem("device") === "iPad"){
                         self.showPerson();
                     }else{
@@ -262,10 +264,7 @@ define([
                 
             });
             
-            if(localStorage.getItem("selectedPerson")){
-                self.model= new mapModel(JSON.parse(localStorage.getItem("selectedPerson")));
-                self.showPersonPhone( self.map,self.model);
-            }    
+  
         },
         
         showPersonPhone: function(map,coords){

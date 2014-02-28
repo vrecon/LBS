@@ -109,6 +109,7 @@ define([
         },   
         person : function(id){
             var self = this;
+            this.navigate( "maps");
             if(this.checkForToken()){
                 Helper.showPage('#person', function(){
                     var view = self.viewManager.addView('person' ,new PersonView({"id":id}));  
