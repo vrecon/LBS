@@ -3,8 +3,9 @@
     <form action="">
         <div><input type="text" id="username" placeholder="Naam" class="name" required/></div>
         <div><input type="password" id="password" placeholder="Wachtwoord" class="password" required/></div>
-        <div class="error  <%if(token != "Invalid Username or Password"){%> hide <% } %>" ><%= token %></div>
-    </form>    
+        <div class="error  <%if(token != "Invalid Username or Password" && token != "Please provide a Username and Password" ){%> hide <% } %>" ><%= token %></div>
+    </form>
+    <div id="loginbutton" class="loginbutton"></div>
     <div id="register">Registreren</div>   
 </div>
 <div class="logo"></div>    

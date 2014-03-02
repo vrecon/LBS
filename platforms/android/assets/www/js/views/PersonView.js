@@ -67,7 +67,7 @@ define([
                     ref.addEventListener('loadstart', function() {  });
                 },450); 
             
-        },
+        }, 
         
         linkedin : function(e){
             e.preventDefault();

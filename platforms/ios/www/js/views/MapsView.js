@@ -75,6 +75,9 @@ define([
             $(".icon-glass").removeClass("icon-glass");
             $(".sector").removeClass("sector");
             $("#popUpPerson").hide();
+            $("#popUpSector").hide();
+            var height = window.innerHeight ;
+            $('#map-canvas').height(height);
             $("#popUpDiv").show();
                                    
         },    
@@ -86,6 +89,7 @@ define([
             $(".icon-cancel").removeClass("icon-cancel");
             $(".rmsector").addClass("sector");
             $(".rmsector").removeClass("rmsector");
+             $("#popUpSector").show();
             $("#popUpDiv").hide();
         },   
         
@@ -112,10 +116,11 @@ define([
             e.stopPropagation();
             var id = e.currentTarget.id;
             $("#under_map").hide();
-            var height = window.innerHeight ;
-            $('#map-canvas').height(height);
             window.localStorage.removeItem("selectedPerson");
             localStorage.setItem("currentSector",id);
+            localStorage.setItem("currentSectorName",e.currentTarget.innerText);
+            $("#popUpSector").html(e.currentTarget.innerText);
+             $("#popUpSector").show();
             this.updateMap();
             this.rmPopupSectors(e);
         },    
@@ -162,7 +167,7 @@ define([
                 } 
                 
                 function fail(){
-                    alert("failed");
+                    alert("Er is iets mis gegaan, probeer het later nog eens.");
                 }
                 
                 geoloc(success, fail);
@@ -227,7 +232,7 @@ define([
             }
             
             function processError(data, status, req) {
-                alert(req.responseText + " " + status);
+                console.log(req.responseText + " " + status);
             }     
         },
         

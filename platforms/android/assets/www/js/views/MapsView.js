@@ -76,6 +76,7 @@ define([
             $(".icon-glass").addClass("icon-cancel");
             $(".icon-glass").removeClass("icon-glass");
             $(".sector").removeClass("sector");
+            $("#popUpSector").hide();
             $("#popUpDiv").show();
         },    
         
@@ -86,6 +87,7 @@ define([
             $(".icon-cancel").removeClass("icon-cancel");
             $(".rmsector").addClass("sector");
             $(".rmsector").removeClass("rmsector");
+            $("#popUpSector").show();
             $("#popUpDiv").hide();
         },   
         
@@ -111,9 +113,13 @@ define([
             e.preventDefault();
             e.stopPropagation();
             var id = e.currentTarget.id;
-            localStorage.removeItem("selectedPerson");
-            $('#under_map').hide();
             localStorage.setItem("currentSector",id);
+            window.localStorage.removeItem("selectedPerson");
+            localStorage.setItem("currentSector",id);
+            localStorage.setItem("currentSectorName",e.currentTarget.innerText);
+            $("#popUpSector").html(e.currentTarget.innerText);
+            $("#popUpSector").show();
+            $('#under_map').hide();
             this.updateMap();
             this.rmPopupSectors(e);
             

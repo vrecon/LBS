@@ -13,12 +13,15 @@ define([
     // Provide a global location to place configuration settings and module
     // creation.
     var app = {
+       
+       
         // The root path to run the application.
         root: "/",
         init: function(){
+
             (function(){
                 timer=null;
-                
+        
                 var uaindex = navigator.userAgent.indexOf( 'OS ');
                 if(new RegExp("iPhone").test(navigator.userAgent)){ 
                     $('body').addClass('ios');
@@ -58,6 +61,7 @@ define([
             }());
             
         if($('body').hasClass('deviceready')){
+     
                 this._publishViews();
         } else {
           
@@ -81,20 +85,23 @@ define([
             document.addEventListener('deviceready', this._onDeviceReady, false);
             document.addEventListener('resume', this._onResume, false);
             document.addEventListener('pause', this._onResign, false);
+
+
         },
+       
         
-        /**
-		 * deviceready Event Handler
-		 * The scope of `this` is the event. In order to call the `receivedEvent`
-		 * function, we must explicitly call `app.receivedEvent(...);`
-		 * @private
-		 */ 
-        _onDeviceReady: function() {
+       /**
+        * deviceready Event Handler
+        * The scope of `this` is the event. In order to call the `receivedEvent`
+        * function, we must explicitly call `app.receivedEvent(...);`
+        * @private
+        */
+       _onDeviceReady: function() {
             app.receivedEvent('deviceready');
-            
-        },
-        
-        /**
+       },
+       
+
+       /**
 		 * deviceready Event Handler
 		 * The scope of `this` is the event. In order to call the `receivedEvent`
 		 * function, we must explicitly call `app.receivedEvent(...);`
@@ -122,10 +129,11 @@ define([
             switch (id) {
                 case 'deviceready':
                     $('body').addClass('deviceready');
-       var token = window.localStorage.getItem("token");
-       if(token){
-       this.checkToken();
-       }
+                    var token = window.localStorage.getItem("token");
+       
+                    if(token){
+                        this.checkToken();
+                    }
        this.init();
 
                     break;

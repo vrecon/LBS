@@ -23,6 +23,7 @@ define([
             'focus input' : 'focus',
              'blur input':'unfocus',
             'keypress input[type=password]': 'processKey',
+            'touchend #loginbutton':'login',
             'touchstart #register':"register"
         },
         
@@ -76,7 +77,7 @@ define([
                  var currentUser =json.Body.AuthenticateUserExtendedResponse.AuthenticateUserExtendedResult.CurrentUser;
                   window.localStorage.setItem("currentUser",JSON.stringify(currentUser));  
                     
-                    if(window.localStorage.getItem("token")!= "Invalid Username or Password"){  
+                  if(window.localStorage.getItem("token")!= "Invalid Username or Password" && window.localStorage.getItem("token")!= "Please provide a Username and Password"){
                     	self.registerPushNotification();
                    
                         Helper.go("#toplevel");

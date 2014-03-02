@@ -21,7 +21,9 @@
             e.preventDefault();
             e.stopPropagation();
             var hash = e.currentTarget.id;
+            var currentSectorName = e.currentTarget.getAttribute("data");
             window.localStorage.setItem("currentSector",hash);
+            window.localStorage.setItem("currentSectorName",currentSectorName);
               Helper.go("#maps");
     
         },

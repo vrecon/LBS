@@ -19,11 +19,12 @@ define([
         identifier: 'login',
         events:{
             'submit': 'login',
-            "change input" :"changed",
+            'change input' :'changed',
             'focus input' : 'focus',
              'blur input':'unfocus',
             'keypress input[type=password]': 'processKey',
-            'touchstart #register':"register"
+            'touchend #loginbutton':'login',
+            'touchstart #register':'register'
         },
         
         
@@ -76,7 +77,7 @@ define([
                  var currentUser =json.Body.AuthenticateUserExtendedResponse.AuthenticateUserExtendedResult.CurrentUser;
                   window.localStorage.setItem("currentUser",JSON.stringify(currentUser));  
                     
-                    if(window.localStorage.getItem("token")!= "Invalid Username or Password"){   
+                    if(window.localStorage.getItem("token")!= "Invalid Username or Password" && window.localStorage.getItem("token")!= "Please provide a Username and Password"){
                       // self.registerPushNotification();
                        PushHelper.register();
                         Helper.go("#toplevel");
@@ -88,7 +89,7 @@ define([
               }
 
             function processError(data, status, req) {
-                alert(req.responseText + " " + status);
+                console.log(req.responseText + " " + status);
             }  
         
         },

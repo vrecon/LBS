@@ -44,7 +44,7 @@ define([
   
                  $.ajax({
                     type: "POST",
-                    url: "http://107.20.81.173:3011/pushid",
+                    url: "https://push.lindenmobile.com/pushid",
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify(sendInfo),
